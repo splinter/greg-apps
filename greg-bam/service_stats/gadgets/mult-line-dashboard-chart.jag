@@ -296,15 +296,14 @@
 	}
 
         function getSlaArtifact(service) {
-		var wsRegistryClient = Packages.org.wso2.carbon.registry.ws.client.jaggery.JaggeryWSRegistryClient;
-		var client = new wsRegistryClient();
-		var url = 'https://localhost:9443/services/';
-		var remoteRegistryClient = client.initialize(url);
+		var carbon = require('carbon');
+		var server = new carbon.server.Server(null);
+		var options = {username: 'admin',  domain: 'carbon.super' , tenantId: -1234};
+		var registry = new carbon.registry.Registry(server, options);
 		var path = '/_system/governance/slas/' + service;
-		if (remoteRegistryClient.resourceExists(path)) {
-			var remoteRegistry = Packages.org.wso2.carbon.governance.api.util.GovernanceUtils.getGovernanceUserRegistry(remoteRegistryClient, "admin");
-			Packages.org.wso2.carbon.governance.api.util.GovernanceUtils.loadGovernanceArtifacts(remoteRegistry);
-			var genericArtifactManager = new Packages.org.wso2.carbon.governance.api.generic.GenericArtifactManager(remoteRegistry, "sla");
+		var bol = registry.exists(path);
+		if (bol) {
+			var genericArtifactManager = new Packages.org.wso2.carbon.governance.api.generic.GenericArtifactManager(registry, "sla");
 			var artifact = genericArtifactManager.getAllGenericArtifacts()[0];
 			return artifact;
 		}
