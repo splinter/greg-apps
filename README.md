@@ -5,7 +5,7 @@ greg-apps
 Dependencies
 ============
 
-#greg-impact
+##greg-impact
 * Requires the carbon and process modules 
 
 ##greg-bam
@@ -15,5 +15,5 @@ Dependencies
 ##greg-publisher
 * Updated registry.xml
 * Updated service.rxt
-* The GREG pack needs to contain the jaggery.scxml executor
+
 
